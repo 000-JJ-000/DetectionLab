@@ -1,6 +1,7 @@
 # Detection Lab
 ## As of 2023-01-01, DetectionLab is no longer being actively maintained
-############### This is a fork of DetectionLab to adjust the environment for my usage ###############
+### This is a fork of DetectionLab to adjust the environment for my usage.
+
 ![DetectionLab](./img/DetectionLab.png)
 
 DetectionLab is tested weekly on Saturdays via a scheduled CircleCI workflow to ensure that builds are passing.
