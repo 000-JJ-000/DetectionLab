@@ -143,8 +143,8 @@ resource "proxmox_vm_qemu" "wef" {
   }
 }
 
-resource "proxmox_vm_qemu" "win10" {
-  name = "win10"
+resource "proxmox_vm_qemu" "win10-1" {
+  name = "win10-1"
   target_node = var.proxmox_node
   clone = "Windows10"
   full_clone = true
@@ -180,6 +180,88 @@ resource "proxmox_vm_qemu" "win10" {
     model = "virtio"
     bridge = var.hostonly_network
     macaddr = "00:50:56:a2:b1:c4"
+    firewall = false
+  }
+}
+
+resource "proxmox_vm_qemu" "win10-2" {
+  name = "win10-2"
+  target_node = var.proxmox_node
+  clone = "Windows10"
+  full_clone = true
+  desc = "win10"
+  cores = "2"
+  sockets = "1"
+  cpu = "host"
+  memory = "2048"
+  scsihw = "virtio-scsi-pci"
+  bootdisk = "scsi0"
+  agent = 1
+  onboot = false
+
+  disk {
+    size = "64G"
+    type = "scsi"
+    storage = var.vm_disk
+    cache = "writeback"
+    format = "raw"
+    discard = var.vm_disk_discard
+  }
+
+  # This is the network that bridges your host machine with the Proxmox VM
+  network {
+    model = "virtio"
+    bridge = var.vm_network
+    macaddr = "00:50:56:a3:b1:c2"
+    firewall = false
+  }
+
+ # This is the local network that will be used for 192.168.56.x addressing
+  network {
+    model = "virtio"
+    bridge = var.hostonly_network
+    macaddr = "00:50:56:a3:b1:c4"
+    firewall = false
+  }
+}
+
+resource "proxmox_vm_qemu" "win10-3" {
+  name = "win10-3"
+  target_node = var.proxmox_node
+  clone = "Windows10"
+  full_clone = true
+  desc = "win10"
+  cores = "2"
+  sockets = "1"
+  cpu = "host"
+  memory = "2048"
+  scsihw = "virtio-scsi-pci"
+  bootdisk = "scsi0"
+  agent = 1
+  onboot = false
+
+  disk {
+    size = "64G"
+    type = "scsi"
+    storage = var.vm_disk
+    cache = "writeback"
+    format = "raw"
+    discard = var.vm_disk_discard
+  }
+
+  # This is the network that bridges your host machine with the Proxmox VM
+  network {
+    model = "virtio"
+    bridge = var.vm_network
+    macaddr = "00:50:56:a4:b1:c2"
+    firewall = false
+  }
+
+ # This is the local network that will be used for 192.168.56.x addressing
+  network {
+    model = "virtio"
+    bridge = var.hostonly_network
+    macaddr = "00:50:56:a4:b1:c4"
     firewall = false
   }
 }

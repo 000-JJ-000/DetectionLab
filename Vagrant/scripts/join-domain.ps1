@@ -37,7 +37,8 @@ If (($hostname -eq "wef") -or ($hostname -eq "exchange")) {
   Set-ItemProperty -LiteralPath 'HKLM:\SYSTEM\CurrentControlSet\Control' -Name 'WaitToKillServiceTimeout' -Value '500' -Type String -Force -ea SilentlyContinue
   New-ItemProperty -LiteralPath 'HKCU:\Control Panel\Desktop' -Name 'AutoEndTasks' -Value 1 -PropertyType DWord -Force -ea SilentlyContinue
   Set-ItemProperty -LiteralPath 'HKLM:\SYSTEM\CurrentControlSet\Control\SessionManager\Power' -Name 'HiberbootEnabled' -Value 0 -Type DWord -Force -ea SilentlyContinue
-} ElseIf ($hostname -eq "win10") {
+# Modified to work with multiple win10 machines
+} ElseIf ($hostname -like "win10*") {
    Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Adding Win10 to the domain."
   ### Debugging the Win10 domain join issue https://github.com/clong/DetectionLab/issues/801
   $tries = 0
@@ -70,7 +71,8 @@ Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Done Disabling Windows Updates and Wi
 
 # Uninstall Windows Defender from WEF
 # This command isn't supported on WIN10
-If ($hostname -ne "win10" -And (Get-Service -Name WinDefend -ErrorAction SilentlyContinue).status -eq 'Running') {
+# Modified to work with multiple win10 machines
+If ($hostname -notlike "win10*" -And (Get-Service -Name WinDefend -ErrorAction SilentlyContinue).status -eq 'Running') {
   # Uninstalling Windows Defender (https://github.com/StefanScherer/packer-windows/issues/201)
   Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Uninstalling Windows Defender..."
   Try {

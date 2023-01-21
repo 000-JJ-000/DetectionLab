@@ -19,14 +19,14 @@ If (!(Test-Path $ProfilePath)) {
     Add-Content -Path $ProfilePath -Value "$ProgressPreference = 'SilentlyContinue'"
   }
 }
-
+## Disabled - 000-JJ-000
 # Ping DetectionLab server for usage statistics
-Try {
-  curl -userAgent "DetectionLab-$box" "https://ping.detectionlab.network/$box" -UseBasicParsing | out-null
-} Catch {
-  Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Unable to connect to ping.detectionlab.network"
-  Write-Host $_.Exception.Message
-}
+# Try {
+#   curl -userAgent "DetectionLab-$box" "https://ping.detectionlab.network/$box" -UseBasicParsing | out-null
+# } Catch {
+#   Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Unable to connect to ping.detectionlab.network"
+#   Write-Host $_.Exception.Message
+# }
 
 Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Disabling IPv6 on all network adapters..."
 Get-NetAdapterBinding -ComponentID ms_tcpip6 | ForEach-Object {Disable-NetAdapterBinding -Name $_.Name -ComponentID ms_tcpip6}

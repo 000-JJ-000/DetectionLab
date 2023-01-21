@@ -17,10 +17,15 @@ wef:
   hosts:
     y.y.y.y:
 
-win10:
+win10-1:
   hosts:
     z.z.z.z:
-
+win10-2:
+  hosts:
+    t.t.t.t:
+win10-3:
+  hosts:
+    u.u.u.u:
 exchange:
   hosts:
     s.s.s.s:
